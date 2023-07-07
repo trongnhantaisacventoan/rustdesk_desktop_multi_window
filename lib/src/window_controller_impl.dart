@@ -180,7 +180,7 @@ class WindowControllerMainImpl extends WindowController {
   @override
   Future<bool> isFullScreen() async {
     final Map<String, dynamic> arguments = {'windowId': _id};
-    return await _channel.invokeMethod<bool>('isFullScreen', arguments) ??
+    return await _channel.invokeMethod<bool>('isFullScreenSub', arguments) ??
         false;
   }
 

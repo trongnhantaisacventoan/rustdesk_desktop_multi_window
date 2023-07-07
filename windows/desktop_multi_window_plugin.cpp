@@ -114,7 +114,7 @@ void DesktopMultiWindowPlugin::HandleMethodCall(
     MultiWindowManager::Instance()->SetFullscreen(window_id, fullscreen);
     result->Success();
     return;
-  } else if (method_call.method_name() == "isFullscreen") {
+  } else if (method_call.method_name() == "isFullScreenSub") {
     auto *arguments =
         std::get_if<flutter::EncodableMap>(method_call.arguments());
     auto window_id =
