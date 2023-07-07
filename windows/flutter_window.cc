@@ -18,9 +18,6 @@
 
 /// RustDesk deps using method channel
 // #include <bitsdojo_window_windows/bitsdojo_window_plugin.h>
-#include <url_launcher_windows/url_launcher_windows.h>
-#include <window_size/window_size_plugin.h>
-#include <texture_rgba_renderer/texture_rgba_renderer_plugin_c_api.h>
 // #include <window_manager/window_manager_plugin.h>
 // #include <screen_retriever/screen_retriever_plugin.h>
 // #include <tray_manager/tray_manager_plugin.h>
@@ -28,10 +25,7 @@
 void RustDeskRegisterPlugins(flutter::PluginRegistry* registry) {
     // BitsdojoWindowPluginRegisterWithRegistrar(
     //    registry->GetRegistrarForPlugin("BitsdojoWindowPlugin"));
-    UrlLauncherWindowsRegisterWithRegistrar(
-        registry->GetRegistrarForPlugin("UrlLauncherWindows"));
-    WindowSizePluginRegisterWithRegistrar(registry->GetRegistrarForPlugin("WindowSizePlugin"));
-    TextureRgbaRendererPluginCApiRegisterWithRegistrar(registry->GetRegistrarForPlugin("TextureRgbaRendererPlugin"));
+
     // WindowManagerPluginRegisterWithRegistrar(
     //     registry->GetRegistrarForPlugin("WindowManagerPlugin"));
     // ScreenRetrieverPluginRegisterWithRegistrar(
