@@ -141,6 +141,11 @@ public class FlutterMultiWindowPlugin: NSObject, FlutterPlugin {
       let setPreventClose = arguments["setPreventClose"] as! Bool
       MultiWindowManager.shared.setPreventClose(windowId: windowId, setPreventClose: setPreventClose)
       result(nil)
+    case "setCustomToolbar":
+      let arguments = call.arguments as! [String: Any?]
+      let windowId = arguments["windowId"] as! Int64
+      MultiWindowManager.shared.setCustomToolbar(windowId: windowId)
+      result(nil)
     default:
       result(FlutterMethodNotImplemented)
     }

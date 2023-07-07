@@ -74,6 +74,12 @@ class WindowControllerMainImpl extends WindowController {
     });
   }
 
+  Future<void> setCustomToolbar() {
+    return _channel.invokeMethod('setCustomToolbar', <String, dynamic>{
+      'windowId': _id,
+    });
+  }
+
   @override
   Future<void> setFrameAutosaveName(String name) {
     return _channel.invokeMethod('setFrameAutosaveName', <String, dynamic>{
@@ -160,15 +166,13 @@ class WindowControllerMainImpl extends WindowController {
     };
     await _channel.invokeMethod('setPreventClose', arguments);
   }
-  
+
   @override
   Future<int> getXID() async {
-    final Map<String, dynamic> arguments = {
-      'windowId': _id
-    };
+    final Map<String, dynamic> arguments = {'windowId': _id};
     return await _channel.invokeMethod<int>('getXID', arguments) ?? -1;
   }
-  
+
   @override
   Future<bool> isFullScreen() async {
     final Map<String, dynamic> arguments = {'windowId': _id};

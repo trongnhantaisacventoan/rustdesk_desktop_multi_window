@@ -10,9 +10,11 @@ import Foundation
 
 class BaseFlutterWindow: NSObject {
   private let window: NSWindow
+  var fullScreenPresentationOptions: NSApplication.PresentationOptions?
   let windowChannel: WindowChannel
   public var onEvent:((String) -> Void)?
   public var _isPreventClose: Bool = false
+  public var _customToolbar:Bool = false
   public var _isMaximized: Bool = false
 
   init(window: NSWindow, channel: WindowChannel) {
@@ -39,6 +41,22 @@ class BaseFlutterWindow: NSObject {
     NSApp.activate(ignoringOtherApps: false)
     window.makeKeyAndOrderFront(nil)
   }
+    
+    func setCustomToolbar(){
+        _customToolbar = true
+        if(_customToolbar){
+            fullScreenPresentationOptions = NSApplication.PresentationOptions()
+            fullScreenPresentationOptions?.insert(.fullScreen)
+            fullScreenPresentationOptions?.insert(.autoHideToolbar)
+            fullScreenPresentationOptions?.insert(.autoHideMenuBar)
+            fullScreenPresentationOptions?.insert(.autoHideDock)
+          window.titleVisibility = .hidden
+          window.titlebarAppearsTransparent = true
+          let newToolbar = NSToolbar()
+          window.toolbar = newToolbar
+          window.toolbarStyle = .unified
+        }
+    }
 
   func showTitleBar(show: Bool) {
     if (show) {
@@ -140,6 +158,12 @@ class BaseFlutterWindow: NSObject {
     func setPreventClose(setPreventClose: Bool) {
         _isPreventClose = setPreventClose
     }
+    
+    
+    func isCustomToolbar() -> Bool{
+        return _customToolbar
+    }
+
 }
 
 /// Add extra hooks for window
@@ -154,6 +178,8 @@ class FlutterWindow: BaseFlutterWindow {
   let windowId: Int64
 
   let window: NSWindow
+    
+  
 
   weak var delegate: WindowManagerDelegate?
 
@@ -176,6 +202,7 @@ class FlutterWindow: BaseFlutterWindow {
     FlutterMultiWindowPlugin.onWindowCreatedCallback?(flutterViewController)
 
     super.init(window: window, channel: windowChannel)
+      
 
     window.delegate = self
     window.isReleasedWhenClosed = false
@@ -194,7 +221,9 @@ class FlutterWindow: BaseFlutterWindow {
   }
 }
 
+
 extension FlutterWindow: NSWindowDelegate {
+    
   public func windowWillClose(_ notification: Notification) {
     delegate?.onClose(windowId: windowId)
   }
@@ -251,8 +280,27 @@ extension FlutterWindow: NSWindowDelegate {
         _emitEvent("enter-full-screen");
     }
     
+    func windowWillEnterFullScreen(_ notification: Notification) {
+        if(isCustomToolbar()){
+            window.toolbar = nil
+        }
+    }
+    
     public func windowDidExitFullScreen(_ notification: Notification){
         _emitEvent("leave-full-screen");
+        if(isCustomToolbar()){
+            let newToolbar = NSToolbar()
+            window.toolbar = newToolbar
+        }
+    }
+    
+    func window(_ window: NSWindow, willUseFullScreenPresentationOptions proposedOptions: NSApplication.PresentationOptions = []) -> NSApplication.PresentationOptions {
+        if(isCustomToolbar()){
+            return fullScreenPresentationOptions!
+        }else{
+            return proposedOptions
+        }
+        
     }
     
     public func _emitEvent(_ eventName: String) {

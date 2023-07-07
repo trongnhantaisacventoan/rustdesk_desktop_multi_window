@@ -202,6 +202,15 @@ class MultiWindowManager {
         return window.isPreventClose()
     }
     
+    func setCustomToolbar(windowId: Int64)  {
+        guard let window = windows[windowId] else {
+          debugPrint("window \(windowId) not exists.")
+            return
+        }
+         window.setCustomToolbar()
+    }
+
+    
     func setPreventClose(windowId: Int64, setPreventClose: Bool) {
         guard let window = windows[windowId] else {
           debugPrint("window \(windowId) not exists.")

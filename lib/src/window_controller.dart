@@ -49,6 +49,9 @@ abstract class WindowController {
   /// show the window of window
   Future<void> showTitleBar(bool show);
 
+  /// show the window of window
+  Future<void> setCustomToolbar();
+
   /// Indicate if the window is in fullscreen mode.
   Future<bool> isFullScreen();
 
@@ -83,7 +86,7 @@ abstract class WindowController {
   Future<void> setPreventClose(bool isPreventClose);
 
   /// Get x11 id for specific window
-  /// 
+  ///
   /// This is only valid in x11/Linux.
   Future<int> getXID();
 }
