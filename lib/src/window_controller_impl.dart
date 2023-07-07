@@ -1,3 +1,4 @@
+import 'dart:io';
 import 'dart:ui';
 
 import 'package:flutter/foundation.dart';
@@ -74,12 +75,13 @@ class WindowControllerMainImpl extends WindowController {
     });
   }
 
-  Future<void> setCustomToolbar() {
+  Future<void> setCustomToolbar() async {
     if (Platform.isMacOS) {
       return _channel.invokeMethod('setCustomToolbar', <String, dynamic>{
         'windowId': _id,
       });
     }
+    return;
   }
 
   @override
@@ -180,5 +182,17 @@ class WindowControllerMainImpl extends WindowController {
     final Map<String, dynamic> arguments = {'windowId': _id};
     return await _channel.invokeMethod<bool>('isFullScreen', arguments) ??
         false;
+  }
+
+  @override
+  Future<void> restore() async {
+    final Map<String, dynamic> arguments = {'windowId': _id};
+    await _channel.invokeMethod('restore', arguments);
+  }
+
+  @override
+  Future<bool> isMinimized() async {
+    final Map<String, dynamic> arguments = {'windowId': _id};
+    return await _channel.invokeMethod<bool>('isMinimized', arguments) ?? false;
   }
 }

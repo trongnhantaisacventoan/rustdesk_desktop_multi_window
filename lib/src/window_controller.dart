@@ -43,6 +43,11 @@ abstract class WindowController {
   /// Judge if the window is maximized.
   Future<bool> isMaximized();
 
+  Future<bool> isMinimized();
+
+  /// Unmaximize the window.
+  Future<void> restore();
+
   /// Minimize the window
   Future<void> minimize();
 

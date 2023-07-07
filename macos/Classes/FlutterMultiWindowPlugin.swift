@@ -146,6 +146,17 @@ public class FlutterMultiWindowPlugin: NSObject, FlutterPlugin {
       let windowId = arguments["windowId"] as! Int64
       MultiWindowManager.shared.setCustomToolbar(windowId: windowId)
       result(nil)
+    case "restore":
+      let arguments = call.arguments as! [String: Any?]
+      let windowId = arguments["windowId"] as! Int64
+      MultiWindowManager.shared.restore(windowId: windowId)
+      result(nil)
+    case "isMinimized":
+      let arguments = call.arguments as! [String: Any?]
+      let windowId = arguments["windowId"] as! Int64
+      let res =  MultiWindowManager.shared.isMinimized(windowId: windowId)
+      result(res)
+
     default:
       result(FlutterMethodNotImplemented)
     }

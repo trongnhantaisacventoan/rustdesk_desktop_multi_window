@@ -73,6 +73,14 @@ class BaseFlutterWindow: NSObject {
       }
     }
   }
+    
+    func isMinimized() -> Bool {
+      return window.isMiniaturized
+    }
+    
+    func restore() {
+      return window.deminiaturize(nil)
+    }
 
   func isMaximized() -> Bool {
     return window.isZoomed
