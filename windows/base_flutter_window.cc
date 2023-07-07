@@ -179,6 +179,7 @@ bool BaseFlutterWindow::IsMaximized() {
     return windowPlacement.showCmd == SW_MAXIMIZE;
 }
 
+
 void BaseFlutterWindow::Maximize() {
     auto window = GetWindowHandle();
     if (!window) {
