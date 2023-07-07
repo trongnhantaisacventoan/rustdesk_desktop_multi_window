@@ -75,9 +75,11 @@ class WindowControllerMainImpl extends WindowController {
   }
 
   Future<void> setCustomToolbar() {
-    return _channel.invokeMethod('setCustomToolbar', <String, dynamic>{
-      'windowId': _id,
-    });
+    if (Platform.isMacOS) {
+      return _channel.invokeMethod('setCustomToolbar', <String, dynamic>{
+        'windowId': _id,
+      });
+    }
   }
 
   @override
