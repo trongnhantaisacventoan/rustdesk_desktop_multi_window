@@ -44,7 +44,11 @@ public:
 
   bool IsMaximized();
 
+  bool IsMinimized();
+
   void Maximize();
+
+  void Restore();
 
   void Unmaximize();
 
